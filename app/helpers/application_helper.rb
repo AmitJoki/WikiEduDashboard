@@ -25,7 +25,7 @@ module ApplicationHelper
   end
 
   def logo_favicon_tag
-    favicon_path = if Rails.env == 'development'
+    favicon_path = if Rails.env.development?
                      "/assets/images/#{Figaro.env.favicon_dev_file}"
                    else
                      "/assets/images/#{Figaro.env.favicon_file}"
@@ -72,5 +72,8 @@ module ApplicationHelper
     survey_paths = %w[survey surveys rapidfire]
     return 'survey-page' if survey_paths.include?(base_path)
     return 'fixed-nav'
+  end
+  def corrected_course_path(course)
+    course_path(course).sub "%2F", "/"
   end
 end
