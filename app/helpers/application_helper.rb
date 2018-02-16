@@ -74,6 +74,6 @@ module ApplicationHelper
     return 'fixed-nav'
   end
   def corrected_course_path(course)
-    course_path(course).sub "%2F", "/"
+    course_path(course).gsub /%2[Ff]/, "/"
   end
 end
