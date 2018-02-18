@@ -5,6 +5,7 @@ require "#{Rails.root}/lib/alerts/dyk_nomination_monitor"
 require "#{Rails.root}/lib/alerts/course_alert_manager"
 require "#{Rails.root}/lib/alerts/survey_response_alert_manager"
 require "#{Rails.root}/lib/alerts/discretionary_sanctions_monitor"
+require "#{Rails.root}/lib/alerts/ga_nomination_monitor"
 
 module UpdateCycleAlertGenerator
   def generate_alerts
@@ -16,6 +17,9 @@ module UpdateCycleAlertGenerator
 
     log_message 'Generating DYK alerts'
     DYKNominationMonitor.create_alerts_for_course_articles
+
+    log_message 'Generating Good Article alerts'
+    GANominationMonitor.create_alerts_for_course_articles
 
     log_message 'Generating course alerts'
     CourseAlertManager.generate_course_alerts
