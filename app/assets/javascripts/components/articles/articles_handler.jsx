@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import jQuery from 'jquery';
+import { connect } from "react-redux";
 import createReactClass from 'create-react-class';
+
 import ArticleList from './article_list.jsx';
 import UIActions from '../../actions/ui_actions.js';
 import AssignmentList from '../assignments/assignment_list.jsx';
