@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import jQuery from 'jquery';
 import createReactClass from 'create-react-class';
 import ArticleList from './article_list.jsx';
 import UIActions from '../../actions/ui_actions.js';
@@ -8,6 +9,7 @@ import ServerActions from '../../actions/server_actions.js';
 import AvailableArticles from '../articles/available_articles.jsx';
 import CourseOresPlot from './course_ores_plot.jsx';
 import CategoryHandler from '../categories/category_handler.jsx';
+import { addNotification } from '../../actions/notification_actions.js';
 
 const ArticlesHandler = createReactClass({
   displayName: 'ArticlesHandler',
@@ -15,11 +17,20 @@ const ArticlesHandler = createReactClass({
   propTypes: {
     course_id: PropTypes.string,
     current_user: PropTypes.object,
-    course: PropTypes.object
+    course: PropTypes.object,
+    addNotification: PropTypes.func
+  },
+
+  getInitialState() {
+    return {
+      articles: [],
+      limitReached: false,
+      limit: 500
+    };
   },
 
   componentWillMount() {
-    ServerActions.fetch('articles', this.props.course_id);
+    ServerActions.fetch('articles', this.props.course_id, `limit=${this.state.limit}`);
     ServerActions.fetch('assignments', this.props.course_id);
   },
 
@@ -27,10 +38,31 @@ const ArticlesHandler = createReactClass({
     return UIActions.sort('articles', e.target.value);
   },
 
+  showMore() {
+    ServerActions.fetch('articles', this.props.course_id, `limit=${this.state.limit + 100}`);
+  },
+
+  updateState(state) {
+    this.setState({ limitReached: state.limitReached, limit: state.limit, articles: state.articles });
+  },
+
   render() {
     // FIXME: These props should be required, and this component should not be
     // mounted in the first place if they are not available.
     if (!this.props.course || !this.props.course.home_wiki) { return <div />; }
+
+    let showMoreButton;
+    if (!this.state.limitReached) {
+      showMoreButton = <div><button className="button ghost stacked right" onClick={this.showMore}>{I18n.t('revisions.see_more')}</button></div>;
+    }
+
+    jQuery(document).one('limitBreached', () => {
+      this.props.addNotification({
+        message: 'Search results are limited for better performance. You can always load more later.',
+        closable: true,
+        type: 'success'
+      });
+    });
 
     let header;
     if (Features.wikiEd) {
@@ -66,7 +98,8 @@ const ArticlesHandler = createReactClass({
               </select>
             </div>
           </div>
-          <ArticleList {...this.props} />
+          <ArticleList updateStatus={this.updateStatus} {...this.props} />
+          {showMoreButton}
         </div>
         <div id="assignments" className="mt4">
           <div className="section-header">
@@ -81,4 +114,5 @@ const ArticlesHandler = createReactClass({
   }
 });
 
-export default ArticlesHandler;
+const mapDispatchToProps = { addNotification };
+export default connect(null, mapDispatchToProps)(ArticlesHandler);

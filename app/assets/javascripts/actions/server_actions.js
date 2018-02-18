@@ -1,15 +1,20 @@
 import McFly from 'mcfly';
 import _ from 'lodash';
+import jQuery from 'jquery';
 import API from '../utils/api.js';
+
 const Flux = new McFly();
 
 const ServerActions = Flux.createActions({
 
   // General-purpose
-  fetch(model, courseId) {
+  fetch(model, courseId, args) {
     const actionType = `RECEIVE_${model.toUpperCase()}`;
-    return API.fetch(courseId, model)
-      .then(resp => ({ actionType, data: resp }))
+    return API.fetch(courseId, model, args)
+      .then(resp => {
+        if (actionType === "RECEIVE_ARTICLES" && resp.count > 500) jQuery(document).trigger('limitBreached');
+        return { actionType, data: resp };
+      })
       .catch(resp => ({ actionType: 'API_FAIL', data: resp }));
   },
 

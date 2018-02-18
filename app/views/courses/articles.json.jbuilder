@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+articles = !@limit ? @course.articles_courses.live.includes(article: :wiki) : @course.articles_courses.live.includes(article: :wiki).limit(@limit);
+
 json.course do
-  json.articles @course.articles_courses.live.includes(article: :wiki) do |ac|
+  json.articles articles do |ac|
     article = ac.article
     json.call(ac, :character_sum, :view_count, :new_article)
     json.call(article, :id, :namespace, :rating)
@@ -13,3 +15,4 @@ json.course do
     json.pretty_rating rating_display(article.rating)
   end
 end
+json.count articles.count
