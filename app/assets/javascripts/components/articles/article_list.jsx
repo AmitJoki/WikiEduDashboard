@@ -13,7 +13,9 @@ import ServerActions from '../../actions/server_actions.js';
 import CourseUtils from '../../utils/course_utils.js';
 
 const getState = () => ({
-  articles: ArticleStore.getModels()
+  articles: ArticleStore.getModels(),
+  limit: 500,
+  limitReached: false
 });
 
 const ArticleList = ({
