@@ -231,7 +231,10 @@ class CoursesController < ApplicationController
   end
 
   def set_limit
-    @limit = params[:limit] if (params[:endpoint] = 'revisions')
+    case params[:endpoint] when 'revisions', 'articles' then
+      # Shouldn't fail fetching articles when limit isn't specified
+      @limit = params[:limit] ? params[:limit] : false
+    end
   end
 
   # If the user could make an edit to the course, this verifies that

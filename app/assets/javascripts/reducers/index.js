@@ -14,6 +14,7 @@ import notifications from './notifications';
 import recentEdits from './recent_edits.js';
 import recentUploads from './recent_uploads';
 import revisions from './revisions';
+import articles from './articles';
 import suspectedPlagiarism from './suspected_plagiarism';
 import ui from './ui';
 import userCourses from './user_courses';
@@ -38,6 +39,7 @@ const reducer = combineReducers({
   recentEdits,
   recentUploads,
   revisions,
+  articles,
   suspectedPlagiarism,
   ui,
   userCourses,

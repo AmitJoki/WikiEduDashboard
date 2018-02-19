@@ -34,3 +34,4 @@ class GANominationAlert < Alert
       !resolved
     end
 end
+

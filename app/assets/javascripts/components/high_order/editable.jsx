@@ -22,6 +22,10 @@ const Editable = (Component, Stores, Save, GetState, Label, SaveLabel, SaveOnly)
       return newState;
     },
 
+    componentWillUpdate(nextProps, nextState) {
+      if (this.props.updateState) this.props.updateState(nextState);
+    },
+
     cancelChanges() {
       for (let i = 0; i < Stores.length; i++) {
         const store = Stores[i];

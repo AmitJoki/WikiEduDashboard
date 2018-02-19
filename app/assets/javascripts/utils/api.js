@@ -341,11 +341,11 @@ const API = {
     );
   },
 
-  fetch(courseId, endpoint) {
+  fetch(courseId, endpoint, args) {
     return new Promise((res, rej) =>
       $.ajax({
         type: 'GET',
-        url: `/courses/${courseId}/${endpoint}.json`,
+        url: `/courses/${courseId}/${endpoint}.json${args ? `?${args}` : ''}`,
         success(data) {
           return res(data);
         }
