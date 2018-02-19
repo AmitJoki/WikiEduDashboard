@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "#{Rails.root}/lib/alerts/articles_for_deletion_monitor"
+require "#{Rails.root}/lib/alerts/ga_nomination_monitor"
 require "#{Rails.root}/lib/alerts/dyk_nomination_monitor"
 require "#{Rails.root}/lib/alerts/course_alert_manager"
 require "#{Rails.root}/lib/alerts/survey_response_alert_manager"
