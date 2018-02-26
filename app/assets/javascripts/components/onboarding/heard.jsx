@@ -9,19 +9,12 @@ import { addNotification } from '../../actions/notification_actions.js';
 
 const HeardFrom = createReactClass({
   propTypes: {
-    currentUser: PropTypes.object,
     returnToParam: PropTypes.string,
     addNotification: PropTypes.func
   },
 
   getInitialState() {
-    const user = this.props.currentUser;
     return {
-      started: false,
-      user,
-      name: user.real_name,
-      email: user.email,
-      instructor: (user.permissions !== null) ? String(user.permission === 2) : null,
       heardFrom: ''
     };
   },
@@ -36,8 +29,6 @@ const HeardFrom = createReactClass({
   _handleSubmit(e) {
     e.preventDefault();
     this.setState({ sending: true });
-    this.state.user.instructor = this.state.instructor === 'true';
-    $('#react_root').data('current_user', this.state.user);
 
     return API.heardFrom({
       heardFrom: this.state.heardFrom
@@ -65,7 +56,7 @@ const HeardFrom = createReactClass({
         <form className="panel" onSubmit={this._handleSubmit} ref="form">
           <div className="form-group">
             <label>Tell us about how you learnt about Wiki Ed?<span className="form-required-indicator">*</span></label>
-            <textarea required className="form-control" type="text" name="heardFrom" defaultValue={this.state.heardFrom} onChange={this._handleFieldChange.bind(this, 'name')} />
+            <textarea required className="form-control" type="text" name="heardFrom" defaultValue={this.state.heardFrom} onChange={this._handleFieldChange.bind(this, 'heardFrom')} />
             <p className="form-help-text">
                 It could be anything, like from a friend, through search results etc.
             </p>

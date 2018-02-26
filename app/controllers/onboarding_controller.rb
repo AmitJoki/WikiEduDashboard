@@ -25,6 +25,7 @@ class OnboardingController < ApplicationController
 
   def heard
     # Send email here.
+    heard_from = params[:heardFrom]
     head :no_content
   end
 
