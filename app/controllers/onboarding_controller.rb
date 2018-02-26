@@ -23,6 +23,11 @@ class OnboardingController < ApplicationController
     head :no_content
   end
 
+  def heard
+    # Send email here.
+    head :no_content
+  end
+
   private
 
   def set_new_permissions

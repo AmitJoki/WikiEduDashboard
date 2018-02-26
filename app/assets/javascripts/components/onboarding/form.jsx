@@ -44,7 +44,9 @@ const Form = createReactClass({
       instructor: this.state.instructor === 'true'
     })
     .then(() => {
-      return browserHistory.push(`/onboarding/permissions?return_to=${decodeURIComponent(this.props.returnToParam)}`);
+      console.log(this.state);
+      const destination = this.state.instructor === 'true' ? 'heard' : 'permissions';
+      return browserHistory.push(`/onboarding/${destination}?return_to=${decodeURIComponent(this.props.returnToParam)}`);
     }
     )
     .catch(() => {
@@ -62,7 +64,7 @@ const Form = createReactClass({
     const disabled = this.state.sending;
     return (
       <div className="form">
-        <h1>Let’s get some business out of the way.</h1>
+        <h1>Let’s get some business out of the way!</h1>
         <form className="panel" onSubmit={this._handleSubmit} ref="form">
           <div className="form-group">
             <label>First and last name <span className="form-required-indicator">*</span></label>
