@@ -440,6 +440,7 @@ en:
       invalid_slug: Blank school/title for course.
       duplicate_slug: 'Another program called %{slug} already exists.'
     expected_students: Expected Students
+    explore_courses: Search Courses
     features_feedback: 'Automated Suggestions:'
     feedback: Feedback
     feedback_loading: Please wait while suggestions are Loading...
@@ -661,6 +662,7 @@ en:
     enroll: Add Editor
     enrollment: Add/Remove Editors
     explore: Find Programs
+    explore_courses: Search Programs
     courses_enrolled: Programs participated
     expected_students: Expected Editors
     instructors: Facilitators
